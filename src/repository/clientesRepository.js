@@ -1,11 +1,16 @@
 import con from './connection.js';
 
 export async function inserirCliente(cliente) {
-    const comando = `INSERT INTO clientes (nome, data, servico) VALUES (?, ?, ?)`;
+    const comando = `
+        INSERT INTO clientes (nome, servico_id, endereco, telefone, cpf)
+        VALUES (?, ?, ?, ?, ?)
+    `;
     let [resultado] = await con.query(comando, [
         cliente.nome,
-        cliente.data,
-        cliente.servico
+        cliente.servico_id,
+        cliente.endereco,
+        cliente.telefone,
+        cliente.cpf
     ]);
     return resultado.insertId;
 }
@@ -17,11 +22,22 @@ export async function listarClientes() {
 }
 
 export async function atualizarCliente(id, cliente) {
-    const comando = `UPDATE clientes SET nome = ?, data = ?, servico = ? WHERE id = ?`;
+    const comando = `
+        UPDATE clientes
+        SET
+            nome = ?,
+            servico_id = ?,
+            endereco = ?,
+            telefone = ?,
+            cpf = ?
+        WHERE id = ?
+    `;
     await con.query(comando, [
         cliente.nome,
-        cliente.data,
-        cliente.servico,
+        cliente.servico_id,
+        cliente.endereco,
+        cliente.telefone,
+        cliente.cpf,
         id
     ]);
 }

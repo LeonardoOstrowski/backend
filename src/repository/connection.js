@@ -23,16 +23,15 @@ async function connectToDatabase() {
                 }
             });
 
-            // Configura um ping para manter a conexão ativa
             setInterval(async () => {
                 try {
                     await connection.ping();
                     console.log('--> Ping bem-sucedido para manter a conexão ativa');
                 } catch (pingError) {
                     console.error('--> Erro ao tentar ping:', pingError);
-                    await connect(); // Reestabelece a conexão se o ping falhar
+                    await connect();
                 }
-            }, 30000); // Ping a cada 30 segundos
+            }, 30000);
 
         } catch (error) {
             console.error('Erro ao conectar no BD:', error);
